@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+
+  "name": "GifCutter",
+  "description": "Chrome extension to allow cutting GIFs from videos on different platforms like YouTube and Twitch.",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "img/icon.png"
+  },
+  "permissions": [
+          "webRequest",
+          "webRequestBlocking",
+          "*://*.youtube.com/*",
+          "*://twitch.tv/*",
+          "activeTab"
+        ],
+
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*", "https://twitch.tv/*"],
+      "js": ["js/content-script.js"]
+    }
+  ],
+   "web_accessible_resources": ["js/content-script.js", "js/background.js"]
+}
