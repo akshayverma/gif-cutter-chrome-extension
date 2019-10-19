@@ -27,4 +27,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * Add client side progress bar while the gif generation is in progress for better UX.
 * Optimize the process of gif generation, currently to many frames are being casted into PNGs and thus the consolidation into GIF is pretty heavy operation, figure out ways to optimize this.
-* Fix UI/UX for taking the input (time window) from the user. Current one is pretty crappy.
+* Improve/Beautify the UI/UX for taking the input (time window) from the user. Current one is pretty crappy.
