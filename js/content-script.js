@@ -28,15 +28,21 @@ var setup = function() {
 window.addEventListener('load', function() {
     setup();
     document.getElementById("submitBtn").addEventListener("click", function(){
-      var startTime = startTimeBox.value;
-      var deltaTime = deltaBox.value;
+      var startTime = parseInt(startTimeBox.value);
+      var deltaTime = parseInt(deltaBox.value);
       console.log(startTime);
       console.log(deltaTime);
+
+      if (deltaTime > 4) {
+        alert("Time range too big!");
+      }
 
       if (!isValidGIFRequest(startTime, delta)){
         alert('Invalid request');
       }
+      console.log(new Date());
       createGIF(startTime, deltaTime);
+      console.log(new Date());
     });
 });
 
@@ -50,55 +56,54 @@ var isValidGIFRequest = function(startTime, delta) {
 }
 
 /***********Lib functions to get images and create GIF**********************/
-function getImageAtTime(secs) {
-  var video = document.getElementsByTagName("video")[0];
-  var videoDuration = video.duration;
-
-  if (secs > 0 && secs < videoDuration ) {
-    video.currentTime = secs;
-    var canvas = document.createElement('canvas');
-    canvas.height = video.videoHeight;
-    canvas.width = video.videoWidth;
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    var img = new Image();
-    img.src = canvas.toDataURL();
-    outputDiv.appendChild(img);
-    return ctx;
-  }
+function getImageAtTime(video, secs) {
+  var canvas = document.createElement('canvas');
+  canvas.height = video.videoHeight;
+  canvas.width = video.videoWidth;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  return ctx;
 }
 
-var readFrames = function(timeStamps, images) {
-  return timeStamps.reduce((p, timeStamp) => {
-     return p.then(() => {
-       images.push(getImageAtTime(timeStamp));
-     });
-  }, Promise.resolve());
-};
-
 function createGIF(startTime, delta) {
+  console.log("Create image array");
+  console.log(new Date());
   var deltaInMS = delta * 1000;
   var iter = 0;
   var timeStamps = [];
   var images = [];
 
-  while (iter < deltaInMS) {
-    timeStamps.push(startTime + iter/1000);
-    iter+=250;
+  var video = document.getElementsByTagName("video")[0];
+  var videoDuration = video.duration;
+
+  if (startTime > 0 && startTime < videoDuration ) {
+    video.currentTime = startTime;
+    var now = end = new Date();
+    var lastClick = now;
+    var currentTime = startTime;
+
+    while ((end - now) < deltaInMS) {
+      if (end - lastClick > 250) {
+        images.push(getImageAtTime(video, currentTime));
+        currentTime += 0.25;
+        lastClick = end;
+      }
+      end = new Date();
+    }
   }
 
-  readFrames(timeStamps, images);
-
-  const encoder = new GIFEncoder(320, 240);
+  console.log("Starting encoder");
+  console.log(new Date());
+  const encoder = new GIFEncoder(64, 48);
   encoder.start();
   encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
   encoder.setDelay(100);  // frame delay in ms
-  encoder.setQuality(10); // image quality. 10 is default.
+  encoder.setQuality(1); // image quality. 10 is default.
 
   // use node-canvas
   const canvas = document.createElement('canvas');
-  canvas.height = 320;
-  canvas.width = 240;
+  canvas.height = 64;
+  canvas.width = 48;
   const ctx = canvas.getContext('2d');
 
   for (var i=0; i<images.length; i++) {
