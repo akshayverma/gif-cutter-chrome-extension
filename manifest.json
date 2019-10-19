@@ -21,8 +21,9 @@
   "content_scripts": [
     {
       "matches": ["https://*.youtube.com/*", "https://twitch.tv/*"],
-      "js": ["js/content-script.js"]
+      "js": ["js/content-script.js", "js/LZWEncoder.js", "js/NeuQuant.js", "js/GIFEncoder.js"]
     }
   ],
-   "web_accessible_resources": ["js/content-script.js", "js/background.js"]
+   "web_accessible_resources": ["js/content-script.js", "js/LZWEncoder", "js/NeuQuant",
+     "js/GIFEncoder.js", "js/background.js"]
 }
