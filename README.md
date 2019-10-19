@@ -18,9 +18,8 @@ To get this running in your chrome browser, for now you can just
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Result
-Video :- https://www.youtube.com/watch?v=ei8hPkyJ0bU
-
-Gif :- ![](examples/crushcrushcrush.gif)
+* Video :- ![](https://www.youtube.com/watch?v=ei8hPkyJ0bU)
+* Gif :- ![](examples/crushcrushcrush.gif)
 
 ## TODO list
 
