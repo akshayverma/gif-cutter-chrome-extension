@@ -8,15 +8,9 @@ To get this running in your chrome browser, for now you can just
 1. Clone the repository and 
 2. Goto chrome://extensions and load unpacked extension and load this. 
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-## Credits
-
-* [GIFEncoder](https://github.com/antimatter15/jsgif) - The framework used for consolidating pngs into GIF.
+## Built With
+* Vanilla JS - Used vanilla js to extract out png images in the time window chosen by the user by casting the frame into html5 canvas.
+* [GIFEncoder](https://github.com/antimatter15/jsgif) - Used gifencoder for consolidating PNG images into GIF.
 
 
 ## License
